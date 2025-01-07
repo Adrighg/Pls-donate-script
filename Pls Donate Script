@@ -1,4 +1,4 @@
-loadstring(game:HttpGet('https://darkscripts.space/scripts/298ead29-b5db-488e-9858-c872cb8b1307_1030535100829540464.lua',true))()                              
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/Adrighg/Pls-donate-script./refs/heads/main/Pls%20Donate%20Script",true))()                          
 
 -- Lokaler Spieler und PlayerGui sicherstellen
 local player = game.Players.LocalPlayer
