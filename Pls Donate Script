@@ -1,10 +1,23 @@
- loadstring(game:HttpGet("https://raw.githubusercontent.com/Adrighg/Pls-donate-script./refs/heads/main/Pls%20Donate%20Script",true))()                          
+-- Lade und führe das erste Script aus
+print("Lade das erste Script...")
+local success, result = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/Adrighg/Pls-donate-script./refs/heads/main/Pls%20Donate%20Script", true))()
+end)
+
+if not success then
+    warn("Fehler beim Laden des ersten Scripts:", result)
+else
+    print("Erstes Script erfolgreich ausgeführt.")
+end
+
+-- Warte, um sicherzustellen, dass das erste Script geladen ist
+task.wait(1)
 
 -- Lokaler Spieler und PlayerGui sicherstellen
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
-print("Skript gestartet") -- Debugging
+print("Zweites Script gestartet") -- Debugging
 
 -- Erstelle eine ScreenGui (aber noch nicht sichtbar)
 local screenGui = Instance.new("ScreenGui")
