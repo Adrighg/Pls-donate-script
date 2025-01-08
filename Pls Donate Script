@@ -116,13 +116,11 @@ task.delay(23, function()
 end)
 
 -- Schalterfunktion: Toggle ON/OFF
-local secondScriptEnabled = false -- Variable für den Schalterzustand
 toggleButton.MouseButton1Click:Connect(function()
     if toggleButton.Text == "OFF" then
         toggleButton.Text = "ON"
         toggleButton.BackgroundColor3 = Color3.new(0, 1, 0) -- Farbe ändern zu grün (ON)
         popupFrame.Visible = true -- Popup sichtbar machen
-        secondScriptEnabled = true -- Schalter aktivieren
 
         -- Nach 5 Sekunden das Popup wieder ausblenden
         task.delay(5, function()
@@ -132,100 +130,5 @@ toggleButton.MouseButton1Click:Connect(function()
         toggleButton.Text = "OFF"
         toggleButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Farbe ändern zu rot (OFF)
         popupFrame.Visible = false -- Popup unsichtbar machen
-        secondScriptEnabled = false -- Schalter deaktivieren
-    end
-end)
-
--- Bedingung für das Ausführen des zweiten Scripts
-task.delay(1, function()
-    while true do
-        task.wait(1)
-        if secondScriptEnabled then
-            print("Lade das zweite Script...")
-            local player = game.Players.LocalPlayer
-local UserInputService = game:GetService("UserInputService") -- UserInputService für Tasteneingaben
-
--- Funktion für das Erstellen der Spendenmeldung
-local function showDonationMessage(donorName, amount)
-    -- Überprüfe, ob bereits ein GUI existiert
-    if player:FindFirstChild("PlayerGui"):FindFirstChild("DonationUI") then
-        player.PlayerGui.DonationUI:Destroy()
-    end
-
-    -- Erstelle eine ScreenGui
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.Name = "DonationUI"
-    screenGui.Parent = player:WaitForChild("PlayerGui")
-
-    -- Hauptframe für die Nachricht
-    local donationFrame = Instance.new("Frame")
-    donationFrame.Size = UDim2.new(0, 770, 0, 40)
-    donationFrame.Position = UDim2.new(0.6, -200, 1, -120) -- Position in der Mitte unten
-    donationFrame.AnchorPoint = Vector2.new(0.5, 1)
-    donationFrame.BackgroundColor3 = Color3.fromRGB(24, 228, 24) 
-    donationFrame.BorderSizePixel = 0
-    donationFrame.Parent = screenGui
-
-    -- Abgerundete Ecken für den Hauptframe
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 15)
-    corner.Parent = donationFrame
-
-    -- Text für die Spendenmeldung mit 💸 Emoji
-    local donationLabel = Instance.new("TextLabel")
-    donationLabel.Size = UDim2.new(1, -45, 1, 0)
-    donationLabel.Position = UDim2.new(0, 50, 0, 0)
-    donationLabel.BackgroundTransparency = 1
-    donationLabel.Text = "💸 " .. donorName .. " donated 💸 " .. tostring(amount) .. " Robux to You!"
-    donationLabel.TextColor3 = Color3.new(0, 0, 0) -- Schwarzer Text
-    donationLabel.TextScaled = true
-    donationLabel.TextSize = 25 -- Textgröße auf 25 gesetzt
-    donationLabel.Font = Enum.Font.GothamBold
-    donationLabel.Parent = donationFrame
-
-    -- Entferne die Nachricht nach 5 Sekunden
-    wait(5)
-    screenGui:Destroy()
-end
-
--- Funktion für das Generieren eines zufälligen Spendenbetrags und Namens
-local function generateDonation()
-    local players = game.Players:GetPlayers()
-    if #players > 1 then
-        local randomPlayer
-        repeat
-            randomPlayer = players[math.random(1, #players)]
-        until randomPlayer ~= player
-
-        local donorName = randomPlayer.DisplayName
-        local amount = math.random(1, 30) * 10 -- Zufälliger Betrag in Zehnerschritten bis 300
-
-        -- Zeige die Spendenmeldung an
-        showDonationMessage(donorName, amount)
-    else
-        -- Debug: Keine Spieler auf dem Server
-        print("Nicht genügend Spieler auf dem Server.")
-    end
-end
-
--- Funktion für das Erkennen des F3-Tastendrucks
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end -- Verhindert, dass Eingaben, die bereits von Roblox verarbeitet wurden, verwendet werden
-
-    -- Prüfe, ob die F3-Taste gedrückt wurde
-    if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode.F3 then
-        -- Zeige die Spendenmeldung an
-        generateDonation()
-    end
-end)
-
--- Hauptschleife: Spendenmeldung alle 1-3 Minuten anzeigen
-while true do
-    wait(math.random(60, 180)) -- Warten 1 bis 3 Minuten
-    generateDonation()
-end
-        else
-            print("Das zweite Script wird nicht ausgeführt, da der Schalter auf OFF ist.")
-        end
     end
 end)
